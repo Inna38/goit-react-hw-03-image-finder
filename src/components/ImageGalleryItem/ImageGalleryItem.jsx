@@ -1,5 +1,7 @@
 import css from './ImageGalleryItem.module.css';
 
+import PropTypes from 'prop-types';
+
 export const ImageGalleryItem = ({
   id,
   webformatURL,
@@ -17,4 +19,11 @@ export const ImageGalleryItem = ({
       />
     </li>
   );
+};
+
+ImageGalleryItem.propTypes = {
+  id: PropTypes.number,
+  webformatURL: PropTypes.string.isRequired,
+  largeImageURL: PropTypes.string.isRequired,
+  tags: PropTypes.string.isRequired,
 };

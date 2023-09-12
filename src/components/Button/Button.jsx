@@ -1,17 +1,15 @@
+import css from './Button.module.css';
 
-export const Button = ({loadBtnClick}) => {
-    return (
-    <button type="button" onClick={loadBtnClick}>Load more</button>
-)
-}
+import PropTypes from 'prop-types';
 
+export const Button = ({ loadBtnClick }) => {
+  return (
+    <button type="button" onClick={loadBtnClick} className={css.button}>
+      Load more
+    </button>
+  );
+};
 
-
-
-// let page = 1
-
-// export const Button = ({loadBtnClick}) => {
-//     return (
-//     <button type="button" onClick={() => loadBtnClick(page += 1)}>Load more</button>
-// )
-// }
+Button.propTypes = {
+  loadBtnClick: PropTypes.func.isRequired,
+};
