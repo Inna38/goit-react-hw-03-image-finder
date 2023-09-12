@@ -1,13 +1,11 @@
 import { Component } from 'react';
 import axios from 'axios';
 
-// import { RotatingTriangles } from 'react-loader-spinner';
-
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Modal } from './Modal/Modal';
 import { Button } from './Button/Button';
-import { Loader } from "./Loader/Loader";
+import { Loader } from './Loader/Loader';
 
 const KEY_API = '38479410-4fdece6f7b350d5238491f06f';
 const BASE_URL = 'https://pixabay.com/api/';
@@ -61,6 +59,8 @@ export class App extends Component {
       searchElement,
       isLoader: true,
       page: 1,
+      totalHits: null,
+      total: null,
     });
   };
 
@@ -77,12 +77,14 @@ export class App extends Component {
     return (
       <>
         <Searchbar onSearch={this.handleSearch} />
-        {/* {isLoader && <RotatingTriangles />} */}
-            {isLoader && <Loader />} 
+        {isLoader && <Loader />}
+
         {item ? <ImageGallery data={item} onClickImg={this.handleModal} /> : ''}
+
         {isShowModal && (
           <Modal largeImageURL={largeImageURL} handleModal={this.handleModal} />
         )}
+
         {this.state.totalHits !== this.state.total && (
           <Button loadBtnClick={this.loadBtnClick} />
         )}
