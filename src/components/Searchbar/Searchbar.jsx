@@ -1,5 +1,6 @@
 import { Component } from 'react';
 
+import Notiflix from 'notiflix';
 import PropTypes from 'prop-types';
 
 import css from './Searchbar.module.css';
@@ -17,6 +18,10 @@ export class Searchbar extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    if (!this.state.value) {
+      Notiflix.Notify.failure('Please enter your request');
+      return;
+    }
     this.props.onSearch(this.state.value);
     this.setState({
       value: '',

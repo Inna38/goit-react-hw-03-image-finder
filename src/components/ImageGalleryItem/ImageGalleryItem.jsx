@@ -10,7 +10,7 @@ export const ImageGalleryItem = ({
   onClickImg,
 }) => {
   return (
-    <li className={css.ImageGalleryItem} key={id}>
+    <li className={css.ImageGalleryItem}>
       <img
         src={webformatURL}
         alt={tags}

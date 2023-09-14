@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import axios from 'axios';
+import Notiflix from 'notiflix';
 
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
@@ -13,7 +14,7 @@ const BASE_URL = 'https://pixabay.com/api/';
 export class App extends Component {
   state = {
     searchElement: '',
-    item: null,
+    item: [],
     page: 1,
     isLoader: false,
     isShowModal: false,
@@ -30,6 +31,15 @@ export class App extends Component {
       const { data } = await axios.get(
         `${BASE_URL}?key=${KEY_API}&q=${this.state.searchElement}&image_type=photo&per_page=12&page=${this.state.page}`
       );
+
+      if (data.hits.length === 0) {
+        this.setState({
+          isLoader: false,
+        });
+        Notiflix.Notify.info('Not found');
+        return;
+      }
+
       if (!this.state.item) {
         this.setState({
           item: data.hits,
@@ -72,22 +82,22 @@ export class App extends Component {
   };
 
   render() {
-    const { item, largeImageURL, isLoader, isShowModal } = this.state;
+    const { item, largeImageURL, isLoader, isShowModal, totalHits, total } =
+      this.state;
 
     return (
       <>
         <Searchbar onSearch={this.handleSearch} />
-        {isLoader && <Loader />}
 
         {item ? <ImageGallery data={item} onClickImg={this.handleModal} /> : ''}
+
+        {isLoader && <Loader />}
 
         {isShowModal && (
           <Modal largeImageURL={largeImageURL} handleModal={this.handleModal} />
         )}
 
-        {this.state.totalHits !== this.state.total && (
-          <Button loadBtnClick={this.loadBtnClick} />
-        )}
+        {totalHits !== total && <Button loadBtnClick={this.loadBtnClick} />}
       </>
     );
   }
