@@ -60,7 +60,11 @@ export class App extends Component {
     this.setState(prev => ({
       isLoader: true,
       page: prev.page + 1,
+
     }));
+    // if (this.state.totalHits !== this.state.total) {
+    //   <Button/>
+    // }
   };
 
   handleSearch = searchElement => {
@@ -97,7 +101,7 @@ export class App extends Component {
           <Modal largeImageURL={largeImageURL} handleModal={this.handleModal} />
         )}
 
-        {totalHits !== total && <Button loadBtnClick={this.loadBtnClick} />}
+        {totalHits !== total &&  !isLoader ? <Button loadBtnClick={this.loadBtnClick} /> : ""}
       </>
     );
   }
